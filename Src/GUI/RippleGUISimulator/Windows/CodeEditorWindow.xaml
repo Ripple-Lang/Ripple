@@ -1,0 +1,115 @@
+﻿<Window x:Class="Ripple.GUISimulator.Windows.CodeEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:b="clr-namespace:Ripple.GUISimulator.Behaviors"
+        xmlns:ctrls="clr-namespace:Ripple.GUISimulator.Controls"
+        Height="{DynamicResource DefaultMainWindowHeight}" Width="{DynamicResource DefaultMainWindowWidth}"
+        MinHeight="{DynamicResource MinWindowHeight}" MinWidth="{DynamicResource MinWindowWidth}"
+        Background="{DynamicResource GrayBackground}"
+        Title="Ripple コードエディタ" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closing="Window_Closing">
+
+    <Window.Resources>
+        <ResourceDictionary Source="../ResourceDictionary.xaml" />
+    </Window.Resources>
+
+    <i:Interaction.Triggers>
+        <b:FileDialogTrigger>
+            <b:ShowFileDialogAction />
+        </b:FileDialogTrigger>
+
+        <b:TaskDialogMessageTrigger>
+            <b:ShowTaskDialogAction />
+        </b:TaskDialogMessageTrigger>
+    </i:Interaction.Triggers>
+
+    <Window.InputBindings>
+        <KeyBinding Gesture="Ctrl+N" Command="{Binding NewWindowCommand}" />
+        <KeyBinding Gesture="Ctrl+O" Command="{Binding OpenSourceCommand}" />
+        <KeyBinding Gesture="Ctrl+S" Command="{Binding SaveCommand}" />
+        <KeyBinding Gesture="Ctrl+E" Command="{Binding OpenScriptFileCommand}" />
+        <KeyBinding Gesture="F5"  Command="{Binding CompileCommand}" />
+        <KeyBinding Gesture="Alt+4" Command="{Binding CloseSimulationStartingPaneCommand}" />
+    </Window.InputBindings>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--メニュー-->
+
+        <Menu Grid.Row="0">
+            <MenuItem Header="ファイル(_F)">
+                <MenuItem Header="新規作成(_N)" InputGestureText="Ctrl+N" Command="{Binding NewWindowCommand}" />
+                <MenuItem Header="開く(_O)" InputGestureText="Ctrl+O" Command="{Binding OpenSourceCommand}"/>
+                <MenuItem Header="スクリプトを開く(_E)" InputGestureText="Ctrl+E" Command="{Binding OpenScriptFileCommand}" />
+                <Separator/>
+                <MenuItem Header="上書き保存(_S)" InputGestureText="Ctrl+S" Command="{Binding SaveCommand}" />
+                <MenuItem Header="名前を付けて保存(_A)" InputGestureText="Ctrl+2" />
+            </MenuItem>
+
+            <MenuItem Header="コンパイル(_C)">
+                <MenuItem Header="コンパイルしてシミュレーションを開始する(_C)" InputGestureText="F5"
+                          Command="{Binding CompileCommand}"/>
+                <MenuItem Header="コンパイルオプション(_O)" Command="{Binding ShowOptionWindowCommand}" />
+            </MenuItem>
+            
+            <MenuItem Header="ウィンドウ(_W)">
+                <MenuItem Header="右パネルを閉じる(_C)" InputGestureText="Alt+4"
+                          Command="{Binding CloseSimulationStartingPaneCommand}" />
+            </MenuItem>
+        </Menu>
+
+        <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,1" />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="0" Name="RightPaneCol"/>
+            </Grid.ColumnDefinitions>
+
+            <!--左パネル-->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Margin="{StaticResource WindowBarMargin}">
+                    <TextBlock FontSize="{StaticResource ContentTitleFontSize}">
+                シミュレーションコードを入力しましょう
+                    </TextBlock>
+                </Grid>
+
+                <Grid Grid.Row="1" Background="{StaticResource GrayBackground}">
+                    <TextBox Name="CodeTextBox" AcceptsReturn="True" AcceptsTab="True"
+                     HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+                     Text="{Binding Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     BorderThickness="0,1,0,1" BorderBrush="Gray" />
+                </Grid>
+            </Grid>
+            
+            <!--スプリッター-->
+
+            <GridSplitter Grid.Column="1" Width="7.5"
+                          HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                          BorderThickness="0.5,0,0.5,0" BorderBrush="Gray"
+                          Visibility="{Binding Visibility, ElementName=RightPane}" />
+            
+            <!--右パネル-->            
+            <ctrls:SimulationStartingPane Grid.Column="2" x:Name="RightPane" Visibility="Collapsed" />
+        </Grid>
+
+        <StatusBar Grid.Row="2">
+            <StatusBarItem>
+                <TextBlock Text="{Binding StatusBarString, Mode=OneWay}" />
+            </StatusBarItem>
+            <StatusBarItem VerticalContentAlignment="Stretch">
+                <ProgressBar Width="100" IsIndeterminate="True" Visibility="{Binding ProgressBarVisibility}" />
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>

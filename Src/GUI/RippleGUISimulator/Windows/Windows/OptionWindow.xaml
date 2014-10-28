@@ -1,0 +1,77 @@
+﻿<Window x:Class="Ripple.GUISimulator.Windows.Windows.OptionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Ripple.GUISimulator.Windows.Windows"
+        Title="コンパイルオプション" Height="275" Width="600"        
+        Background="{DynamicResource GrayBackground}"
+        ResizeMode="NoResize" WindowStartupLocation="CenterOwner" KeyDown="Window_KeyDown">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../ResourceDictionary.xaml" />
+                <ResourceDictionary>
+                    <local:NotConverter x:Key="NotConverter" />
+                    <local:ParallelizationOptionConverter x:Key="ParallelizationOptionConverter" />
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Margin="{StaticResource WindowBarMargin}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <CheckBox IsChecked="{Binding Optimize}">最適化を有効にする(_O)</CheckBox>
+            <CheckBox IsChecked="{Binding ParallelizationOption, Converter={StaticResource ParallelizationOptionConverter}}">
+                Parallel指定されたループを並列化する(_P)
+            </CheckBox>
+            <CheckBox IsChecked="{Binding CacheStages}">ステージのキャッシュコードを追加する(_S)</CheckBox>
+            <CheckBox IsChecked="{Binding CacheParameters}">パラメーターのキャッシュコードを追加する(_C)</CheckBox>
+            <CheckBox IsChecked="{Binding AddUniqueNoToVariable}">すべてのローカル変数に固有の番号を付加する(_L)</CheckBox>
+
+            <CheckBox IsChecked="{Binding GenerateInMemory, Converter={StaticResource NotConverter}}">
+                アセンブリをファイルに出力する(_F)
+            </CheckBox>
+            <Grid IsEnabled="{Binding GenerateInMemory, Converter={StaticResource NotConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Margin="20,0,0,0">ファイル名</TextBlock>
+                <TextBox Grid.Column="1" Name="FileName"
+                         FontSize="{StaticResource DefaultFontSize}" FontFamily="{StaticResource DefaultFontFamily}"
+                         VerticalAlignment="Center" Text="{Binding OutputAssembly}">
+                    <TextBox.Margin>
+                        <Thickness Left="{StaticResource ElementMargin}" Right="{StaticResource ElementMargin}" />
+                    </TextBox.Margin>
+                </TextBox>
+                <Button Grid.Column="2" VerticalAlignment="Center" Name="ReferenceButton" Click="ReferenceButton_Click">参照(_R)</Button>
+            </Grid>
+        </StackPanel>
+
+        <DockPanel Grid.Row="1">
+            <Button DockPanel.Dock="Right" Name="Cancel" Click="Cancel_Click">
+                キャンセル(_C)
+            </Button>
+
+            <Button DockPanel.Dock="Right" Width="{Binding ActualWidth, ElementName=Cancel}" Name="OK" Click="OK_Click">
+                <Button.Margin>
+                    <Thickness Right="{StaticResource ElementMargin}" />
+                </Button.Margin>
+                _OK
+            </Button>
+            
+            <TextBlock DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Hyperlink Name="RestoreDefault" Click="RestoreDefault_Click">
+                    既定値を復元する
+                </Hyperlink>
+            </TextBlock>
+        </DockPanel>
+    </Grid>
+</Window>

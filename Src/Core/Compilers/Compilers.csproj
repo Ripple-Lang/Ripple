@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5C910F53-18D8-4CE8-902D-1336D83C4732}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ripple.Compilers</RootNamespace>
+    <AssemblyName>Ripple.Core.Compiler</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CodeGenerations\Compiler.cs" />
+    <Compile Include="CodeGenerations\CSharp\AccessLevel.cs" />
+    <Compile Include="CodeGenerations\CSharp\CSharpCodeGenHelper.cs" />
+    <Compile Include="CodeGenerations\CSharp\ICSharp.cs" />
+    <Compile Include="CodeGenerations\CSharp\NameSpace.cs" />
+    <Compile Include="CodeGenerations\CSharp\TemporaryVariableNameFactory.cs" />
+    <Compile Include="CodeGenerations\CSharp\Type.cs" />
+    <Compile Include="CodeGenerations\CSharp\TypeMember.cs" />
+    <Compile Include="ConstantValues\Constants.cs" />
+    <Compile Include="Exceptions\Exceptions.cs" />
+    <Compile Include="Libraries\BuiltinFunctions.cs" />
+    <Compile Include="Options\CodeGenerationOption.cs" />
+    <Compile Include="ErrorsAndWarnings\ErrorAndWarning.cs" />
+    <Compile Include="ErrorsAndWarnings\Errors.cs" />
+    <Compile Include="ErrorsAndWarnings\ErrorsAndWarningsContainer.cs" />
+    <Compile Include="Symbols\ISyntaxNode.cs" />
+    <Compile Include="Symbols\ITypeInferable.cs" />
+    <Compile Include="Symbols\ProgramUnit.cs" />
+    <Compile Include="Symbols\StageHoldState.cs" />
+    <Compile Include="SyntaxAnalysis\StatementParser.cs" />
+    <Compile Include="Symbols\IScope.cs" />
+    <Compile Include="Symbols\Statement.cs" />
+    <Compile Include="Symbols\Symbol.cs" />
+    <Compile Include="CodeGenerations\CSharpCodeGenerator.cs" />
+    <Compile Include="Tools\Interpretation\Interpreter.cs" />
+    <Compile Include="LexicalAnalysis\Lexer.cs" />
+    <Compile Include="LexicalAnalysis\StringScanner.cs" />
+    <Compile Include="LexicalAnalysis\TokenCorrespondences.cs" />
+    <Compile Include="LexicalAnalysis\TokenSequence.cs" />
+    <Compile Include="Tokens\Token.cs" />
+    <Compile Include="SyntaxAnalysis\ExpressionParser.cs" />
+    <Compile Include="SyntaxAnalysis\Parser.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Expressions\Expression.cs" />
+    <Compile Include="Tools\Simulations\Simulator.cs" />
+    <Compile Include="Types\TypeData.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Components\Components.csproj">
+      <Project>{48e4d462-b894-4c79-bc6a-e45d1fd44378}</Project>
+      <Name>Components</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

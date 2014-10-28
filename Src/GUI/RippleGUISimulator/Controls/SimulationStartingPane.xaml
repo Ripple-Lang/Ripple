@@ -1,0 +1,208 @@
+﻿<UserControl x:Class="Ripple.GUISimulator.Controls.SimulationStartingPane"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="{DynamicResource MinWindowHeight}" d:DesignWidth="{DynamicResource MinWindowWidth}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../ResourceDictionary.xaml" />
+                <ResourceDictionary>
+                    <BooleanToVisibilityConverter x:Key="BoolToVisi" />
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <UserControl.InputBindings>
+        <KeyBinding Gesture="Alt+V" Command="{Binding ShowCSharpCodeCommand}" />
+    </UserControl.InputBindings>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="{DynamicResource WindowBarMargin}">
+            <TextBlock FontSize="{DynamicResource ContentTitleFontSize}">
+                シミュレーションをはじめましょう
+            </TextBlock>
+
+            <Button HorizontalAlignment="Right" VerticalAlignment="Top" Padding="4"
+                    BorderThickness="0" Background="Transparent"
+                    FontFamily="Marlett" Content="r" Visibility="{Binding IsPane, Converter={StaticResource BoolToVisi}}"
+                    Command="{Binding CloseThisPaneCommand}" ToolTip="閉じる"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.Margin>
+                <Thickness Left="{StaticResource LeftRightMargin}" Right="{StaticResource LeftRightMargin}" />
+            </Grid.Margin>
+            <TextBlock TextWrapping="WrapWithOverflow">
+                シミュレーションを開始する準備ができました。計算したい時刻やパラメーターを入力したら、「開始」ボタンをクリックしてください。
+            </TextBlock>
+        </Grid>
+
+        <TabControl Grid.Row="3">
+            <TabControl.Margin>
+                <Thickness Left="{StaticResource LeftRightMargin}" Right="{StaticResource LeftRightMargin}" />
+            </TabControl.Margin>
+
+            <TabItem Header="時刻とパラメーター">
+                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Grid.Row="3" Orientation="Vertical">
+                        <StackPanel.Margin>
+                            <Thickness Left="{StaticResource LeftRightMargin}" Right="{StaticResource LeftRightMargin}" />
+                        </StackPanel.Margin>
+
+                        <Grid>
+                            <Grid.Margin>
+                                <Thickness Top="{StaticResource ElementMargin}" />
+                            </Grid.Margin>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center">
+                                <TextBlock.Margin>
+                                    <Thickness Right="{StaticResource LeftRightMargin}" />
+                                </TextBlock.Margin>
+                                計算したい時刻
+                            </TextBlock>
+                            <TextBox Name="MaxTimeTextBox" Grid.Column="2" Text="{Binding MaxTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        </Grid>
+
+                        <ItemsControl ItemsSource="{Binding ParameterItems}" Focusable="False">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.Margin>
+                                            <Thickness Top="{StaticResource ElementMargin}" />
+                                        </Grid.Margin>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0" VerticalAlignment="Center">
+                                            <Run Style="{StaticResource ParameterInputStyle}" Text="param " /><Run Style="{StaticResource ParameterInputStyle}" Text="{Binding Name}" /><Run Style="{StaticResource ParameterInputStyle}" Text=" as " /><Run Style="{StaticResource ParameterInputStyle}" Text="{Binding TypeName, Mode=OneWay}" /><Run Style="{StaticResource ParameterInputStyle}" Text=" =" />
+                                        </TextBlock>
+                                        <TextBox Grid.Column="2" Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="ステージ">
+                <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <StackPanel.Margin>
+                            <Thickness Left="{StaticResource LeftRightMargin}" Right="{StaticResource LeftRightMargin}"/>
+                        </StackPanel.Margin>
+
+                        <TextBlock>
+                            <TextBlock.Margin>
+                                <Thickness Top="{StaticResource LeftRightMargin}" />
+                            </TextBlock.Margin>
+                        初期値をファイルから入力したいステージがあれば、選択してください。
+                        </TextBlock>
+
+                        <ItemsControl ItemsSource="{Binding Stages, Mode=OneWay}" Focusable="False">
+
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.Margin>
+                                            <Thickness Top="{StaticResource ElementMargin}" />
+                                        </Grid.Margin>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="125" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <CheckBox IsChecked="{Binding IsUsingFile}" VerticalAlignment="Center" />
+
+                                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="3,0,0,3">
+                                        <Run Style="{StaticResource ParameterInputStyle}" Text="{Binding Stage.Name, Mode=OneWay}" />
+                                        </TextBlock>
+
+                                        <DockPanel Grid.Column="2" IsEnabled="{Binding IsUsingFile}">
+                                            <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="10,0,0,0" Command="{Binding ShowFileDialogCommand}">参照</Button>
+                                            <Grid>
+                                                <TextBox Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}"
+                                                     Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType=Grid}}"/>
+                                            </Grid>
+                                        </DockPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+
+
+        <DockPanel Grid.Row="4" Margin="{StaticResource WindowBarMargin}" Visibility="{Binding Simulating, Converter={StaticResource BoolToVisi}}">
+            <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center">
+                <TextBlock.Margin>
+                    <Thickness Right="{StaticResource ElementMargin}" />
+                </TextBlock.Margin>
+                シミュレーション中です...
+            </TextBlock>
+            <ProgressBar DockPanel.Dock="Right" Height="27" HorizontalAlignment="Stretch"
+                         Minimum="0" Maximum="{Binding MaxProgress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Value="{Binding CurrentProgress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+        </DockPanel>
+
+        <DockPanel Grid.Row="6" Margin="{StaticResource WindowBarMargin}">
+            <Button DockPanel.Dock="Right" Command="{Binding StartSimulationCommand}">
+                開始(_S)
+            </Button>
+
+            <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center">
+                <TextBlock.Margin>
+                    <Thickness Right="{StaticResource ElementMargin}" />
+                </TextBlock.Margin>
+                
+                <Hyperlink Command="{Binding ShowCSharpCodeCommand}">
+                    C#コードの表示(V)
+                </Hyperlink>
+            </TextBlock>
+
+            <Button DockPanel.Dock="Left" HorizontalAlignment="Left"
+                    Visibility="{Binding ModifyCodeButtonVisibility}" Command="{Binding ModifyCodeCommand}">
+                コードを書き直す(_M)
+            </Button>
+        </DockPanel>
+    </Grid>
+</UserControl>

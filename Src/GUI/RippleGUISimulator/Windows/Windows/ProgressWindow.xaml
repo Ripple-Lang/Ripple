@@ -1,0 +1,21 @@
+﻿<Window x:Class="Ripple.GUISimulator.Windows.Windows.ProgressWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Height="135" Width="475"
+        Title="進行中" Background="{DynamicResource GrayBackground}"
+        ResizeMode="NoResize" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+    
+    <Window.Resources>
+        <ResourceDictionary Source="../../ResourceDictionary.xaml" />
+    </Window.Resources>
+
+    <Grid VerticalAlignment="Center">
+        <StackPanel Margin="10,0,10,0">
+            <TextBlock>
+                <Run Text="{Binding What, Mode=OneTime}" /><Run>います。しばらくお待ちください...</Run>
+            </TextBlock>
+            
+            <ProgressBar IsIndeterminate="True" Height="20" Margin="0,23,0,0" />
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,119 @@
+﻿<Window x:Class="Ripple.GUISimulator.Windows.VisualizationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Ripple.GUISimulator.Windows"
+        Title="Ripple GUI Simulator"
+        Height="{DynamicResource DefaultWindowHeight}" Width="{DynamicResource LargeWindowWidth}"
+        MinHeight="{DynamicResource MinWindowHeight}" MinWidth="{DynamicResource MinWindowWidth}"
+        Background="{DynamicResource GrayBackground}"
+        WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+
+    <Window.Resources>
+        <ResourceDictionary Source="../ResourceDictionary.xaml" />
+    </Window.Resources>
+
+    <Grid>
+        <Grid.Margin>
+            <Thickness Left="{StaticResource LeftRightMargin}"
+                       Right="{StaticResource ElementMargin}"
+                       Bottom="{StaticResource TopBottomMargin}" />
+        </Grid.Margin>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="345" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.Margin>
+                    <Thickness Top="{StaticResource TopBottomMargin}" Bottom="{StaticResource TopBottomMargin}" />
+                </Grid.Margin>
+
+                <TextBlock FontSize="{StaticResource ContentTitleFontSize}">
+                    シミュレーション結果をビジュアル化しましょう
+                </TextBlock>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <TextBlock TextWrapping="WrapWithOverflow">
+                    シミュレーションが完了しました。
+                    <LineBreak />
+                    まず、ビジュアル化ツールを選択してください。
+                </TextBlock>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Grid.Margin>
+                    <Thickness Top="{StaticResource ElementMargin}" />
+                </Grid.Margin>
+
+                <ComboBox Grid.Row="0" Grid.Column="2"
+                          ItemsSource="{Binding Path=ImportedPlugins.Visualizers}" DisplayMemberPath="Value.Name"
+                          SelectedItem="{Binding SelectedPlugin}" />
+            </Grid>
+
+            <Grid Grid.Row="3">
+                <Grid.Margin>
+                    <Thickness Top="{StaticResource ElementMargin}" />
+                </Grid.Margin>
+
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" TextWrapping="WrapWithOverflow">次にビジュアル化に使用するステージを選択(複数でもよい)してください。</TextBlock>
+
+                    <ListBox DockPanel.Dock="Bottom" ItemsSource="{Binding Stages}" SelectionMode="Multiple"
+                             Name="StagesListBox" SelectionChanged="StagesListBox_SelectionChanged">
+                        <ListBox.Margin>
+                            <Thickness Top="{StaticResource ElementMargin}" />
+                        </ListBox.Margin>
+                    </ListBox>
+                </DockPanel>
+            </Grid>
+
+            <Button Grid.Row="4" HorizontalAlignment="Right" Command="{Binding VisualizeCommand}">
+                <Button.Margin>
+                    <Thickness Top="{StaticResource ElementMargin}" />
+                </Button.Margin>
+                ビジュアル化(_V)
+            </Button>
+
+            <Grid Grid.Row="5">
+                <Grid.Margin>
+                    <Thickness Top="{StaticResource ElementMargin}" />
+                </Grid.Margin>
+
+                <TextBlock>
+                    <Run Text="[ 統計情報 ] シミュレーションに要した時間は" />
+                    <Run Text="{Binding ElapsedString, Mode=OneTime}" />
+                    <Run Text="秒でした。" />
+                </TextBlock>
+            </Grid>
+        </Grid>
+        
+        <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+
+        <Grid Grid.Column="2">
+            <Grid.Margin>
+                <Thickness Top="{StaticResource TopBottomMargin}"/>
+            </Grid.Margin>
+            <TabControl Name="VisalizedTabs"
+                        ItemsSource="{Binding VisualizedControls}" SelectedItem="{Binding SelectedTabControl}">
+                <TabControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=Content.DataContext.StageName, RelativeSource={RelativeSource FindAncestor, AncestorType=TabItem}}" />
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+            </TabControl>
+        </Grid>
+    </Grid>
+</Window>

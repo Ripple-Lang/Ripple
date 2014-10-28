@@ -1,0 +1,16 @@
+﻿<Window x:Class="Ripple.GUISimulator.Windows.SimulationStartingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ctrls="clr-namespace:Ripple.GUISimulator.Controls"
+        Height="{DynamicResource DefaultWindowHeight}" Width="{DynamicResource DefaultWindowWidth}"
+        MinHeight="{DynamicResource MinWindowHeight}" MinWidth="{DynamicResource MinWindowWidth}"
+        Background="{DynamicResource GrayBackground}"
+        Title="Ripple - シミュレーションの開始"
+        WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+
+    <Window.Resources>
+        <ResourceDictionary Source="../ResourceDictionary.xaml" />
+    </Window.Resources>
+    
+    <ctrls:SimulationStartingPane x:Name="Pane" />
+</Window>
