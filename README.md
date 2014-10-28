@@ -86,3 +86,7 @@ stageに対して各時刻ごとに行う処理は、**operation**という形�
 [ロトカ＝ヴォルテラの方程式](http://ja.wikipedia.org/wiki/%E3%83%AD%E3%83%88%E3%82%AB%EF%BC%9D%E3%83%B4%E3%82%A9%E3%83%AB%E3%83%86%E3%83%A9%E3%81%AE%E6%96%B9%E7%A8%8B%E5%BC%8F)にしたがって、食う・食われるの関係にある個体の数をシミュレーションします。Rippleのコードは[こちら](https://github.com/Ripple-Lang/SampleCodes/blob/master/%E3%83%AD%E3%83%88%E3%82%AB%EF%BC%9D%E3%83%B4%E3%82%A9%E3%83%AB%E3%83%86%E3%83%A9%E3%81%AE%E6%96%B9%E7%A8%8B%E5%BC%8F.txt)です。
 
 ![ロトカ＝ヴォルテラの方程式](https://raw.githubusercontent.com/wiki/Ripple-Lang/Ripple/ScreenShots/LotkaVolterra_1.PNG)
+
+## その他
+
+Copyright(C) 2014 Yuya Watari. All rights reserved.
