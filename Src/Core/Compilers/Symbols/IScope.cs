@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Collections.ObjectModel;
-using Ripple.Compilers.Exceptions;
+using System.Linq;
 using Ripple.Compilers.ErrorsAndWarnings;
+using Ripple.Compilers.Exceptions;
 using Ripple.Compilers.LexicalAnalysis;
 
 namespace Ripple.Compilers.Symbols
@@ -75,7 +75,7 @@ namespace Ripple.Compilers.Symbols
             for (; ; )
             {
                 var undecidedNodes = new List<ISyntaxNode>();
-                
+
                 if (!InferType(this, undecidedNodes, errorsAndWarnings))
                 {
                     return false;

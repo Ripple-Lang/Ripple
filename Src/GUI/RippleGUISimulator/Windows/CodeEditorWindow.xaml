@@ -61,6 +61,10 @@
                 <MenuItem Header="右パネルを閉じる(_C)" InputGestureText="Alt+4"
                           Command="{Binding CloseSimulationStartingPaneCommand}" />
             </MenuItem>
+            
+            <MenuItem Header="ヘルプ(_H)">
+                <MenuItem Header="バージョン情報(_A)" Command="{Binding ShowVersionInfoCommand}" />
+            </MenuItem>
         </Menu>
 
         <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,1" />

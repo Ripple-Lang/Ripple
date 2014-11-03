@@ -237,7 +237,7 @@ namespace Ripple.Compilers.Symbols
                     Body);
             }
         }
-        
+
         public void InferType(List<ISyntaxNode> undecidedNodes)
         {
             if (this.Type == null)

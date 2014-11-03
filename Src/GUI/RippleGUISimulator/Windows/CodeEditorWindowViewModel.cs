@@ -10,6 +10,7 @@ using Microsoft.Win32;
 using Ripple.Compilers.CodeGenerations;
 using Ripple.Compilers.Options;
 using Ripple.GUISimulator.Behaviors;
+using Ripple.GUISimulator.Windows.Windows;
 
 namespace Ripple.GUISimulator.Windows
 {
@@ -366,6 +367,17 @@ namespace Ripple.GUISimulator.Windows
                             this.IsRightPaneShown = false;
                         },
                         () => this.IsRightPaneShown));
+            }
+        }
+
+        private ICommand showVersionInfoCommand;
+        public ICommand ShowVersionInfoCommand
+        {
+            get
+            {
+                return showVersionInfoCommand ??
+                    (showVersionInfoCommand = new RelayCommand(
+                        () => new VersionInfoWindow().ShowDialog()));
             }
         }
 

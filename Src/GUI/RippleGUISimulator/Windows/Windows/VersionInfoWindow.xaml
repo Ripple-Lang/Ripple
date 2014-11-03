@@ -1,0 +1,112 @@
+﻿<Window x:Class="Ripple.GUISimulator.Windows.Windows.VersionInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        Title="バージョン情報" Height="360" Width="650"
+        Background="{DynamicResource GrayBackground}" ResizeMode="NoResize" KeyDown="Window_KeyDown">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../ResourceDictionary.xaml" />
+                <ResourceDictionary>
+                    <Style x:Key="TopMarginStackPanel" TargetType="StackPanel">
+                        <Setter Property="Margin">
+                            <Setter.Value>
+                                <Thickness Top="{StaticResource LeftRightMargin}"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <sys:Double x:Key="LittleLargeSize">16</sys:Double>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="{StaticResource WindowBarMargin}">
+            <TextBlock FontSize="{StaticResource ContentTitleFontSize}">
+                バージョン情報
+            </TextBlock>
+        </Grid>
+
+        <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,1" />
+
+        <Grid Grid.Row="1" Background="White">
+            <DockPanel Grid.Row="1" Margin="{StaticResource WindowBarMargin}">
+                <StackPanel DockPanel.Dock="Top">
+                    <TextBlock Text="{Binding GUIToolName, Mode=OneTime}" FontSize="{StaticResource LittleLargeSize}"/>
+                    <TextBlock>
+                        <Run Text="バージョン" />
+                        <Run Text="{Binding GUIToolVersion, Mode=OneTime}" />
+                    </TextBlock>
+                </StackPanel>
+
+                <StackPanel Style="{StaticResource TopMarginStackPanel}" DockPanel.Dock="Top">
+                    <TextBlock Text="{Binding CompilerName, Mode=OneTime}"  FontSize="{StaticResource LittleLargeSize}"/>
+                    <TextBlock>
+                        <Run Text="バージョン" />
+                        <Run Text="{Binding CompilerVersion, Mode=OneTime}" />
+                    </TextBlock>
+                </StackPanel>
+                
+                <!---->
+
+                <StackPanel Style="{StaticResource TopMarginStackPanel}" VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
+                    <TextBlock Text="このプログラムは以下のツールを利用して構成されています。" />
+
+                    <TextBlock>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Microsoft.CodeDom.Providers.DotNetCompilerPlatform/"
+                                   RequestNavigate="Hyperlink_RequestNavigate">
+                            CodeDOM Providers for .NET Compiler Platform (&quot;Roslyn&quot;)
+                        </Hyperlink>
+                    <Hyperlink NavigateUri="http://www.microsoft.com/web/webpi/eula/net_library_eula_enu.htm"
+                               RequestNavigate="Hyperlink_RequestNavigate">
+                        ライセンス
+                    </Hyperlink>
+                    </TextBlock>
+
+                    <TextBlock>
+                    <Hyperlink NavigateUri="http://www.galasoft.ch/mvvm"
+                               RequestNavigate="Hyperlink_RequestNavigate">
+                        MVVM Light Toolkit
+                    </Hyperlink>
+                    <Hyperlink NavigateUri="http://mvvmlight.codeplex.com/license"
+                               RequestNavigate="Hyperlink_RequestNavigate">
+                        ライセンス
+                    </Hyperlink>
+                    </TextBlock>
+
+                    <TextBlock>
+                    <Hyperlink NavigateUri="https://www.nuget.org/packages/Microsoft.CodeAnalysis"
+                               RequestNavigate="Hyperlink_RequestNavigate">
+                        Microsoft.CodeAnalysis
+                    </Hyperlink>
+                    <Hyperlink NavigateUri="http://www.microsoft.com/web/webpi/eula/dotnetcompilerplatform_redistributables_preview.htm"
+                               RequestNavigate="Hyperlink_RequestNavigate">
+                        ライセンス
+                    </Hyperlink>
+                    </TextBlock>
+                </StackPanel>               
+                
+                <StackPanel VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
+                    <TextBlock Text="{Binding Copyright, Mode=OneTime}" />
+                </StackPanel>
+            </DockPanel>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="{StaticResource WindowBarMargin}">
+            <Button HorizontalAlignment="Right" Width="75"
+                    Name="OKButton" Click="OKButton_Click">
+                _OK
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
