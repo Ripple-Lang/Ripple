@@ -76,17 +76,20 @@ stageに対して各時刻ごとに行う処理は、**operation**という形�
 
 ### ライフゲーム
 
-[ライフゲーム](http://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%83%A0)のシミュレーションコードは[こちら](https://github.com/Ripple-Lang/SampleCodes/blob/master/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%83%A0.txt)です。
+[ライフゲーム](http://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%83%A0)のシミュレーションコードは[こちら][Code_LifeGame]です。
 
 ![ライフゲーム(1)](https://raw.githubusercontent.com/wiki/Ripple-Lang/Ripple/ScreenShots/LifeGame_1.PNG)
 ![ライフゲーム(2)](https://raw.githubusercontent.com/wiki/Ripple-Lang/Ripple/ScreenShots/LifeGame_2.PNG)
 
 ### ロトカ＝ヴォルテラの方程式
 
-[ロトカ＝ヴォルテラの方程式](http://ja.wikipedia.org/wiki/%E3%83%AD%E3%83%88%E3%82%AB%EF%BC%9D%E3%83%B4%E3%82%A9%E3%83%AB%E3%83%86%E3%83%A9%E3%81%AE%E6%96%B9%E7%A8%8B%E5%BC%8F)にしたがって、食う・食われるの関係にある個体の数をシミュレーションします。Rippleのコードは[こちら](https://github.com/Ripple-Lang/SampleCodes/blob/master/%E3%83%AD%E3%83%88%E3%82%AB%EF%BC%9D%E3%83%B4%E3%82%A9%E3%83%AB%E3%83%86%E3%83%A9%E3%81%AE%E6%96%B9%E7%A8%8B%E5%BC%8F.txt)です。
+[ロトカ＝ヴォルテラの方程式](http://ja.wikipedia.org/wiki/%E3%83%AD%E3%83%88%E3%82%AB%EF%BC%9D%E3%83%B4%E3%82%A9%E3%83%AB%E3%83%86%E3%83%A9%E3%81%AE%E6%96%B9%E7%A8%8B%E5%BC%8F)にしたがって、食う・食われるの関係にある個体の数をシミュレーションします。Rippleのコードは[こちら][Code_LotkaVolterra]です。
 
 ![ロトカ＝ヴォルテラの方程式](https://raw.githubusercontent.com/wiki/Ripple-Lang/Ripple/ScreenShots/LotkaVolterra_1.PNG)
 
 ## その他
 
 Copyright(C) 2014 Yuya Watari. All rights reserved.
+
+[Code_LifeGame]: https://github.com/Ripple-Lang/SampleCodes/blob/master/Codes/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%83%A0.txt "ライフゲームのコード"
+[Code_LotkaVolterra]: https://github.com/Ripple-Lang/SampleCodes/blob/master/Codes/%E3%83%AD%E3%83%88%E3%82%AB%EF%BC%9D%E3%83%B4%E3%82%A9%E3%83%AB%E3%83%86%E3%83%A9%E3%81%AE%E6%96%B9%E7%A8%8B%E5%BC%8F.txt "ロトカ＝ヴォルテラの方程式のコード"
