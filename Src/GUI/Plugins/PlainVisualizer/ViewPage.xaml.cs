@@ -53,6 +53,7 @@ namespace Ripple.Plugins.PlainVisualizer
             else
             {
                 this.minTime = this.maxTime = this.time = 0;
+                this.plainsArray = new Array[] { this.plainsArray };
             }
 
             InitializeComponent();
