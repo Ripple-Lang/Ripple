@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Ripple.Compilers.Options;
@@ -112,26 +113,23 @@ namespace Ripple.Compilers.CodeGenerations.CSharp
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append(AccessLevel.ToCSharpCode(option) + " " + Kind.ToCSharpCode(option) + " " + Name);
-            if (extendsOrImplements != null && extendsOrImplements.Count() > 0)
+            sb.Append(
+                AccessLevel.ToCSharpCode(option)        // public
+                + " " + Kind.ToCSharpCode(option)       // class
+                + " " + Name);                          // ClassName
+
+            if (extendsOrImplements != null && extendsOrImplements.Any())
             {
-                sb.Append(" : ");
-                for (int i = 0; i < extendsOrImplements.Count; i++)
-                {
-                    if (i != 0)
-                        sb.Append(", ");
-                    sb.Append(extendsOrImplements[i]);
-                }
+                // 例) : Base, IInterface
+                sb.Append(" : " + string.Join(", ", extendsOrImplements));
             }
 
+            sb.Append("{");
             sb.AppendLine();
-            sb.AppendLine("{");
 
-            foreach (var member in AllMembers)
-            {
-                sb.AppendLine(member.ToCSharpCode(option));
-                sb.AppendLine();
-            }
+            // メンバー
+            sb.AppendLine(
+                string.Join(Environment.NewLine + Environment.NewLine, AllMembers.Select(m => m.ToCSharpCode(option))));
 
             sb.Append("}");
 

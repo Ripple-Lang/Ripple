@@ -24,8 +24,8 @@ namespace Ripple.Compilers.CodeGenerations
             AssemblyName assemblyName = Assembly.GetExecutingAssembly().GetName();
 
             Header = string.Format(@"///
-/// このコードは、{0} によって自動的に生成されました。
-///", assemblyName.Name + " " + assemblyName.Version);
+/// このコードは、{0} によって生成されました。
+///", VersionInfos.VersionInformation.ProductName + " " + VersionInfos.VersionInformation.Version);
         }
 
         #endregion

@@ -12,7 +12,7 @@ namespace Ripple.Compilers.Tools.Interpretation
     /// <summary>
     /// C#コードを生成してそれを実行するインタープリターです。
     /// </summary>
-    public class Interpreter : IDisposable
+    public class Interpreter
     {
         private readonly CodeGenerationResult codeGenerationResult;
         private readonly CodeDomProvider provider;
@@ -36,16 +36,8 @@ namespace Ripple.Compilers.Tools.Interpretation
             get { return codeGenerationResult.ErrorsAndWarnings.HasErrors; }
         }
 
-        public Interpreter(CompileOption option)
-            : this(new CSharpCodeProvider(), option)
-        { }
-
         public Interpreter(CodeDomProvider provider, CompileOption option)
             : this("", provider, option)
-        { }
-
-        public Interpreter(string src, CompileOption option)
-            : this(src, new CSharpCodeProvider(), option)
         { }
 
         public Interpreter(string src, CodeDomProvider provider, CompileOption option)
@@ -99,36 +91,29 @@ namespace Ripple.Compilers.Tools.Interpretation
                 string newCode = codeGenerationResult.GeneratedCode + Environment.NewLine + newResult.GeneratedCode;
 
                 // C#コードのコンパイル
-                using (var compiler = new Compiler(provider))
+                var compiler = new Compiler(provider);
+                var result = await compiler.CompileFromCSharpCodeAsync(newCode, option);
+
+                if (result.CSharpCompilerResults.Errors.HasErrors)
                 {
-                    var result = await compiler.CompileFromCSharpCodeAsync(newCode, option);
-
-                    if (result.CSharpCompilerResults.Errors.HasErrors)
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine("C#コンパイラがエラーを報告しました。");
+                    foreach (var item in result.CSharpCompilerResults.Errors)
                     {
-                        StringBuilder sb = new StringBuilder();
-                        sb.AppendLine("C#コンパイラがエラーを報告しました。");
-                        foreach (var item in result.CSharpCompilerResults.Errors)
-                        {
-                            sb.AppendLine(item.ToString());
-                        }
+                        sb.AppendLine(item.ToString());
+                    }
 
-                        return new InterpretationResult(null, sb.ToString());
-                    }
-                    else
-                    {
-                        return new InterpretationResult(result.CSharpCompilerResults
-                            .CompiledAssembly
-                            .GetType(newResult.NamespaceName + "." + newClassName)
-                            .GetMethod(newMethodName)
-                            .Invoke(null, null));
-                    }
+                    return new InterpretationResult(null, sb.ToString());
+                }
+                else
+                {
+                    return new InterpretationResult(result.CSharpCompilerResults
+                        .CompiledAssembly
+                        .GetType(newResult.NamespaceName + "." + newClassName)
+                        .GetMethod(newMethodName)
+                        .Invoke(null, null));
                 }
             });
-        }
-
-        public void Dispose()
-        {
-            provider.Dispose();
         }
     }
 

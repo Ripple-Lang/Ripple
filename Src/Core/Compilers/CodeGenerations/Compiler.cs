@@ -10,7 +10,7 @@ using Ripple.Compilers.Symbols;
 
 namespace Ripple.Compilers.CodeGenerations
 {
-    public class Compiler : IDisposable
+    public class Compiler
     {
         private readonly string ComponentsDllPath =
             Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), Constants.ComponentDllFileName);
@@ -56,11 +56,6 @@ namespace Ripple.Compilers.CodeGenerations
 
                 return new CompilationResult(unit, csharpCode, errorsAndWarnings, option, csharpCompilationResult);
             });
-        }
-
-        public void Dispose()
-        {
-            Provider.Dispose();
         }
     }
 

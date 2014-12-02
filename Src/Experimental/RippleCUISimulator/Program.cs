@@ -55,8 +55,9 @@ namespace Ripple.CUISimulator
             // コンパイル
             Console.WriteLine("コンパイルしています...");
             CompilationResult result;
-            using (var compiler = new Compiler(new CSharpCodeProvider()))
+            using (var provider = new CSharpCodeProvider())
             {
+                var compiler = new Compiler(new CSharpCodeProvider());
                 result = await compiler.CompileFromRippleSrcAsync(src, arguments.Option);
             }
             Console.WriteLine("コンパイルが完了しました");
@@ -95,8 +96,11 @@ namespace Ripple.CUISimulator
             // 入力が必要なパラメーターの設定
             foreach (var p in inputParams)
             {
-                var interpreted = await new Interpreter(new CompileOption()).InterpretAsync(p.Value + ";");
-                instance.GetType().GetProperty(p.Parameter.Name).SetValue(instance, interpreted.Result);
+                using (var provider = new CSharpCodeProvider())
+                {
+                    var interpreted = await new Interpreter(provider, new CompileOption()).InterpretAsync(p.Value + ";");
+                    instance.GetType().GetProperty(p.Parameter.Name).SetValue(instance, interpreted.Result);
+                }
             }
             Console.WriteLine();
 

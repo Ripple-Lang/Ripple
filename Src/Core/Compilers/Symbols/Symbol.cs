@@ -178,12 +178,9 @@ namespace Ripple.Compilers.Symbols
                 }
                 else
                 {
-                    var asExpressionScope = this.Body as ReturnOnlyBlockStatement;
-
-                    if (asExpressionScope != null)
-                    {
-                        return ((ReturnOnlyBlockStatement)this.Body).Expression.IsConstant;
-                    }
+                    var casted = this.Body as ReturnOnlyBlockStatement;
+                    if (casted != null)
+                        return casted.Expression.IsConstant;
                 }
 
                 return false;

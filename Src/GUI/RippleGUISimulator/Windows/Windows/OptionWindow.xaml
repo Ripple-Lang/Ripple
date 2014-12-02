@@ -46,7 +46,7 @@
                 <TextBlock Grid.Column="0" VerticalAlignment="Center" Margin="20,0,0,0">ファイル名</TextBlock>
                 <TextBox Grid.Column="1" Name="FileName"
                          FontSize="{StaticResource DefaultFontSize}" FontFamily="{StaticResource DefaultFontFamily}"
-                         VerticalAlignment="Center" Text="{Binding OutputAssembly}">
+                         VerticalAlignment="Center" Text="{Binding OutputAssembly, UpdateSourceTrigger=PropertyChanged}">
                     <TextBox.Margin>
                         <Thickness Left="{StaticResource ElementMargin}" Right="{StaticResource ElementMargin}" />
                     </TextBox.Margin>

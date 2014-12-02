@@ -17,17 +17,15 @@ namespace Ripple.Compilers.CodeGenerations.CSharp
             if (isParallel)
             {
                 return string.Format(
-                    "{0}({1}, {2}, {3} => {{"
-                    + Environment.NewLine + "{4}"
-                    + Environment.NewLine + "}});",
+                    "{0}({1}, {2}, {3} =>"
+                    + Environment.NewLine + "{4});",
                     ParallelForMethodFullName, fromInclusive, toExclusive, indexerName, body);
             }
             else
             {
                 return string.Format(
-                    "for ({0} {1} = {2}; {1} < {3}; {1}++) {{"
-                    + Environment.NewLine + "{4}"
-                    + Environment.NewLine + "}}",
+                    "for ({0} {1} = {2}; {1} < {3}; {1}++)"
+                    + Environment.NewLine + "{4}",
                     indexerType, indexerName, fromInclusive, toExclusive, body);
             }
         }

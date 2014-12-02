@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Ripple.Compilers.ConstantValues;
 using Ripple.Compilers.Options;
@@ -131,28 +132,17 @@ namespace Ripple.Compilers.CodeGenerations.CSharp
 
         public override string ToCSharpCode(CompileOption option)
         {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append(AccessLevel.ToCSharpCode(option)
-                + " " + (IsStatic ? "static" : "")
-                + " " + EvaluatedType.ToCSharpCode(option)
-                + " @" + Name + "(");
-
-            for (int i = 0; i < parameters.Count; i++)
-            {
-                if (i != 0)
-                {
-                    sb.Append(", ");
-                }
-
-                sb.Append(parameters[i].Type.ToCSharpCode(option) + " @" + parameters[i].ToCSharpName(option));
-            }
-
-            sb.AppendLine(")");
-
-            sb.Append(contentCSharpCode);
-
-            return sb.ToString();
+            return
+                  AccessLevel.ToCSharpCode(option)              // public
+                + " " + (IsStatic ? "static" : "")              // [static]
+                + " " + EvaluatedType.ToCSharpCode(option)      // void
+                + " @" + Name                                   // Main
+                + "("                                           // (
+                + string.Join(", ",                             // type1 arg1, ..., typen argn
+                    parameters.Select(p => p.Type.ToCSharpCode(option) + " @" + p.ToCSharpName(option)))
+                + ")"                                           // )
+                + Environment.NewLine
+                + contentCSharpCode;                            // { ... }
         }
     }
 

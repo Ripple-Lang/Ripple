@@ -43,15 +43,7 @@ namespace Ripple.Compilers.Expressions
         {
             get { return Operands.All(expr => expr.IsConstant); }
         }
-
-        public void ResolveReference(ProgramUnit unit, ErrorsAndWarningsContainer errorsAndWarnings)
-        {
-            foreach (var expression in Operands)
-            {
-                expression.ResolveReference(unit, errorsAndWarnings);
-            }
-        }
-
+        
         public abstract TypeData ReturnType { get; }
         public abstract string ToCSharpCode(CompileOption option);
 

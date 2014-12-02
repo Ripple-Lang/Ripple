@@ -99,8 +99,9 @@ namespace Ripple.GUISimulator
 
         public async Task<CompilationResult> CompileAsync(string src, CompileOption option)
         {
-            using (Compiler compiler = new Compiler(new Microsoft.CodeDom.Providers.DotNetCompilerPlatform.CSharpCodeProvider()))
+            using (var provider = new Microsoft.CodeDom.Providers.DotNetCompilerPlatform.CSharpCodeProvider())
             {
+                Compiler compiler = new Compiler(provider);
                 try
                 {
                     var compilationResult = await compiler.CompileFromRippleSrcAsync(src, option);
