@@ -11,8 +11,6 @@ Rippleは作者が東京工業大学情報工学科の授業「[情報工学創�
 
 ## 概要
 
-(この項目は書きかけです)
-
 Rippleは**「言語」**と**「ビジュアル化システム」**の二大要素により構成されます。
 
 ### 言語
@@ -43,13 +41,13 @@ operation {
 }
 ```
 
-「ネズミの数」のようなシミュレーションの直接の対象は**stage**と呼ばれます。ここでは、``n``がそれに相当します。
+「ネズミの数」のようなシミュレーションの直接の対象は**stage**と呼ばれます。ここでは、``n``がそれに該当します。
 
 stageに対して各時刻ごとに行う処理は、**operation**という形で記述します。operationは漸化式のようなものです。ここでは、``n``を``c``倍しています。
 
-その``c``(ネズミの数が何倍になるか)のようにシミュレーションに影響を与える変数は**param**(パラメーター)として宣言します。
+シミュレーションに影響を与える変数は**param**(パラメーター)として宣言します。上の例では、``c``が該当します(``c``は、ネズミの数が単位時間あたり何倍になるかを示すものです)。
 
-上記コードを実行する様子は[こちら](https://github.com/Ripple-Lang/Ripple#%E3%81%AD%E3%81%9A%E3%81%BF%E7%AE%97)です。
+※上記コードを実行する様子は[こちら](https://github.com/Ripple-Lang/Ripple#%E3%81%AD%E3%81%9A%E3%81%BF%E7%AE%97)です。
 
 ### ビジュアル化システム
 
@@ -75,7 +73,27 @@ stageに対して各時刻ごとに行う処理は、**operation**という形�
 
 ## 使用法
 
-(この項目は書きかけです)
+ビルドするためには、Visual Studio 2013以降が必要です。Visual Studio 開発者コマンドプロンプトからビルドするには、次のように入力します(64ビットでビルドした場合は、4行目の「x86」を「x64」に置き換えてください)。または、Visual Studio上からもビルドできます。
+
+```
+git clone https://github.com/Ripple-Lang/Ripple.git
+cd Ripple\Src
+MSBuild /t:Rebuild /p:Configuration=Release /m
+cd GUI\RippleGUISimulator\bin\x86\Release\
+RippleGUISimulator.exe
+```
+
+プログラムが起動したら、シミュレーションを開始してみましょう。ここでは、[ライフゲーム](http://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%83%A0)のシミュレーションを行います。
+
+1. エディタ画面に[こちら][Code_LifeGame_Txt]のソースコードを入力する。
+2. 「コンパイル(C)」→「コンパイルしてシミュレーションを開始する(C)」と進んでコンパイルする(F5キーを押してもよい)。
+3. 右側に時刻やパラメーターを入力する。ここでは、上から順に「1000」、「150」、「150」、「0.33」と入力する。
+4. 「開始(S)」ボタンをクリックすると、シミュレーションが始まる。
+5. シミュレーションが終わると表示される画面で、ビジュアル化ツールとして「PlainVisualizer」と書かれてあるものを選択する。さらに、「plain」をクリックして選択する。
+6. 「ビジュアル化(V)」ボタンをクリックする。その後表示される画面で「OK」をクリックする。
+7. シミュレーション結果がビジュアル化される。右上の「再生(P)」ボタンをクリックすると、ライフゲームの様子がアニメーションとして表示される。
+
+そのほかにもいくつかのサンプルコードを[リポジトリ][SampleRepos]で公開しています。
 
 ## プログラム例・スクリーンショット
 
@@ -104,4 +122,6 @@ Copyright(C) 2014 Yuya Watari. All rights reserved.
 
 [Code_Mouse]: https://github.com/Ripple-Lang/SampleCodes/blob/master/Codes/%E3%81%AD%E3%81%9A%E3%81%BF%E7%AE%97.txt "ねずみ算のコード"
 [Code_LifeGame]: https://github.com/Ripple-Lang/SampleCodes/blob/master/Codes/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%83%A0.txt "ライフゲームのコード"
+[Code_LifeGame_Txt]: https://raw.githubusercontent.com/Ripple-Lang/SampleCodes/master/Codes/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%83%A0.txt "ライフゲームのコード"
 [Code_LotkaVolterra]: https://github.com/Ripple-Lang/SampleCodes/blob/master/Codes/%E3%83%AD%E3%83%88%E3%82%AB%EF%BC%9D%E3%83%B4%E3%82%A9%E3%83%AB%E3%83%86%E3%83%A9%E3%81%AE%E6%96%B9%E7%A8%8B%E5%BC%8F.txt "ロトカ＝ヴォルテラの方程式のコード"
+[SampleRepos]: https://github.com/Ripple-Lang/SampleCodes "サンプルコードのリポジトリ"
