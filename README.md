@@ -73,7 +73,7 @@ stageに対して各時刻ごとに行う処理は、**operation**という形�
 
 ## 使用法
 
-ビルドするためには、Visual Studio 2013以降が必要です。Visual Studio 開発者コマンドプロンプトからビルドするには、次のように入力します(64ビットでビルドした場合は、4行目の「x86」を「x64」に置き換えてください)。または、Visual Studio上からもビルドできます。
+ビルドするためには、Visual Studio 2015以降が必要です。Visual Studio 開発者コマンドプロンプトからビルドするには、次のように入力します(64ビットでビルドした場合は、4行目の「x86」を「x64」に置き換えてください)。または、Visual Studio上からもビルドできます。
 
 ```
 git clone https://github.com/Ripple-Lang/Ripple.git
