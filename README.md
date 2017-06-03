@@ -1,79 +1,53 @@
-プログラミング言語「Ripple」
+Programming language "Ripple"
 ======
 
-Rippleは、数値シミュレーションを簡単に記述するためのプログラミング言語、およびその処理系です。
+Ripple is a programming language which is well designed for numerical simulations.
 
-## 経緯
+## Caution
 
-Rippleは作者が東京工業大学情報工学科の授業「[情報工学創作実習](http://www.ocw.titech.ac.jp/index.php?module=General&action=T0300&GakubuCD=101&GakkaCD=53&KougiCD=7230&lang=JA)」で作成したものです。
+This program has only Japanese version.
 
-中学生・高校生やプログラミング初心者の利用を想定して、数値シミュレーションを簡単に記述するという目的のもと開発しました。
+## Summary
 
-## 概要
+Ripple consists of two principal elements, **language** and **visualization system**.
 
-Rippleは**「言語」**と**「ビジュアル化システム」**の二大要素により構成されます。
+### Language
 
-### 言語
+Ripple's language specification is focused on the numerical simulations where the state changes with time.
 
-Rippleの言語仕様は、時間推移とともに状態が変化していくような数値シミュレーションの記述に特化しています。
-
-[ねずみ算](http://ja.wikipedia.org/wiki/%E3%81%AD%E3%81%9A%E3%81%BF%E7%AE%97)を例にとり、増え続けるネズミの数をシミュレーションするコードは次のようになります(ねずみの数が単位時間ごとに何倍かになるというシミュレーションです)。
+The Ripple's sample code simulating "nezumisan" is as follows ("nezumisan" means "computing proliferation of mice". The number of mice is geometric progression):
 
 ```
-// ステージ
-//   - 「ネズミの数」
-stage n as long;
+// Stage
+//   - A target object in this simulation
+stage n as long; // the number of mice
 
-// パラメーター
-//   - 「一匹のネズミが産む子どもの数」
-//     値を初期化していないので、
-//     シミュレーション開始時に入力するよう促される
-param c as int;
+// Parameter
+param c as int;  // the number of mice which one mouse gives birth to
 
-// 初期化
+// Initialization
 init {
-    n<0> = 2;
+    n<0> = 2; // n<0> means the value of n when time is 0
 }
 
-// 各時刻で実行するコード
+// Operation
+//   - Code which is executed every time (like recurrence formula)
 operation {
-    n<next> = n<now> * c;
+    n<next> = n<now> * c; // "now" and "next" are keywords in Ripple. next == now + 1.
 }
 ```
 
-「ネズミの数」のようなシミュレーションの直接の対象は**stage**と呼ばれます。ここでは、``n``がそれに該当します。
+Example of execution is [here](https://github.com/Ripple-Lang/Ripple#Nezumizan).
 
-stageに対して各時刻ごとに行う処理は、**operation**という形で記述します。operationは漸化式のようなものです。ここでは、``n``を``c``倍しています。
+## Visualization system
 
-シミュレーションに影響を与える変数は**param**(パラメーター)として宣言します。上の例では、``c``が該当します(``c``は、ネズミの数が単位時間あたり何倍になるかを示すものです)。
+You don't have to write any code for visualizing results of simulation. It's very easy in Ripple because the visualizing components are provided as plug-in.
 
-※上記コードを実行する様子は[こちら](https://github.com/Ripple-Lang/Ripple#%E3%81%AD%E3%81%9A%E3%81%BF%E7%AE%97)です。
+## Building
 
-### ビジュアル化システム
+In order to build ripple, Visual Studio 2015 or later is required.
 
-シミュレーションの結果は目に見える形にする必要がありますが、そのためにコードを書き足す必要はありません。Rippleでは、シミュレーション結果を簡単にビジュアル化(可視化)できます。
-
-シミュレーションのコードを書いて実行すると、ビジュアル化ツールの選択を促されます。適切なツール(先のねずみ算の例では、「折れ線グラフとして表示するツール」など)を選択すれば、簡単にビジュアル化できます。
-
-ビジュアル化を行うツールはプラグインとして提供され、言語本体とは切り離されています。そのため拡張性があります。
-
-## 特徴
-
-* **高パフォーマンス**
-
-  Rippleは静的型付け言語です。いったんC#コードへ変換されたのち、C#コンパイラにより共通中間言語(CIL)にコンパイルされます。実行時には機械語へJITコンパイルされるため、高いパフォーマンスが得られます。
-
-  また、(簡易的ですが)ループを**並列処理**することが簡単にできます。
-
-* **シンプルな記述**
-
-  記述するシミュレーションの内容にもよりますが、言語レベルで数値シミュレーションに特化しているため、シンプルに記述できる可能性があります。また、シミュレーション結果をビジュアル化するためにコードを書き足す必要はありません。
-  
-  これらは、MATLABなどの言語にある利点と似ています。
-
-## 使用法
-
-ビルドするためには、Visual Studio 2015以降が必要です。Visual Studio 開発者コマンドプロンプトからビルドするには、次のように入力します(64ビットでビルドした場合は、4行目の「x86」を「x64」に置き換えてください)。または、Visual Studio上からもビルドできます。
+From "Developer Command Prompt for Visual Studio", type the following commands.
 
 ```
 git clone https://github.com/Ripple-Lang/Ripple.git
@@ -83,40 +57,38 @@ cd GUI\RippleGUISimulator\bin\x86\Release\
 RippleGUISimulator.exe
 ```
 
-プログラムが起動したら、シミュレーションを開始してみましょう。ここでは、[ライフゲーム](http://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%83%A0)のシミュレーションを行います。
+Let's start [Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) simulation.
 
-1. エディタ画面に[こちら][Code_LifeGame_Txt]のソースコードを入力する。
-2. 「コンパイル(C)」→「コンパイルしてシミュレーションを開始する(C)」と進んでコンパイルする(F5キーを押してもよい)。
-3. 右側に時刻やパラメーターを入力する。ここでは、上から順に「1000」、「150」、「150」、「0.33」と入力する。
-4. 「開始(S)」ボタンをクリックすると、シミュレーションが始まる。
-5. シミュレーションが終わると表示される画面で、ビジュアル化ツールとして「PlainVisualizer」と書かれてあるものを選択する。さらに、「plain」をクリックして選択する。
-6. 「ビジュアル化(V)」ボタンをクリックする。その後表示される画面で「OK」をクリックする。
-7. シミュレーション結果がビジュアル化される。右上の「再生(P)」ボタンをクリックすると、ライフゲームの様子がアニメーションとして表示される。
+1. Type [this code][Code_LifeGame_Txt] to editor.
+2. Press F5 key.
+3. Input time and parameters to the right-side panel. Here, we use 1000, 150, 150, 0.33.
+4. Press "開始(S)" button and simulation starts.
+5. After simulation, select "PlainVisualizer" as visualization plug-in. Besides, click "plain" to select it.
+6. Press "ビジュアル化(V)" button.
+7. You can see visualized result on your screen. Press "再生(P)" to play the animation.
 
-そのほかにもいくつかのサンプルコードを[リポジトリ][SampleRepos]で公開しています。
+Several sample codes are available from [here][SampleRepos].
 
-## プログラム例・スクリーンショット
+## Screenshots
 
-### ねずみ算
+### Nezumizan
 
 ねずみ算のシミュレーションコードは[こちら][Code_Mouse]です。
 
 ![ねずみ算](https://raw.githubusercontent.com/wiki/Ripple-Lang/Ripple/ScreenShots/Mouse_1.PNG)
 
-### ライフゲーム
+### Conway's Game of Life
 
 [ライフゲーム](http://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%83%A0)のシミュレーションコードは[こちら][Code_LifeGame]です。
 
 ![ライフゲーム(1)](https://raw.githubusercontent.com/wiki/Ripple-Lang/Ripple/ScreenShots/LifeGame_1.PNG)
 ![ライフゲーム(2)](https://raw.githubusercontent.com/wiki/Ripple-Lang/Ripple/ScreenShots/LifeGame_2.PNG)
 
-### ロトカ＝ヴォルテラの方程式
-
-[ロトカ＝ヴォルテラの方程式](http://ja.wikipedia.org/wiki/%E3%83%AD%E3%83%88%E3%82%AB%EF%BC%9D%E3%83%B4%E3%82%A9%E3%83%AB%E3%83%86%E3%83%A9%E3%81%AE%E6%96%B9%E7%A8%8B%E5%BC%8F)にしたがって、食う・食われるの関係にある個体の数をシミュレーションします。Rippleのコードは[こちら][Code_LotkaVolterra]です。
+### Lotka-Volterra equations
 
 ![ロトカ＝ヴォルテラの方程式](https://raw.githubusercontent.com/wiki/Ripple-Lang/Ripple/ScreenShots/LotkaVolterra_1.PNG)
 
-## その他
+## Copyright
 
 Copyright(C) 2014 Yuya Watari. All rights reserved.
 
