@@ -3,6 +3,8 @@ Programming Language "Ripple"
 
 Ripple is a programming language which is well designed for numerical simulations.
 
+Japanese version of readme is [here](https://github.com/Ripple-Lang/Ripple/blob/master/README_JP.md).
+
 ## Caution
 
 This program has only Japanese version.
