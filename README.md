@@ -1,4 +1,4 @@
-Programming language "Ripple"
+Programming Language "Ripple"
 ======
 
 Ripple is a programming language which is well designed for numerical simulations.
